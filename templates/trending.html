@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block content %}
+<html lang="en">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: rgb(229, 226, 226);">
+  {% load static %}
+  <br><br>
+    <div class="card-columns">
+      {% for c in PostS %}
+      <div class="card" style="border-color: rgb(253, 216, 2); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+        {% if o.ImagesM %}
+          <img class="card-img-top" src="{{ o.ImagesM.url }}" alt="Card image cap">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title"><b>{{ c.Title_M }}</b></h5>
+          <hr>
+          <a href="{% url 'Filter_Display' c.Category_M %}" style="float: right;"><b>{{ c.Category_M }}</b></a>
+          <p class="card-text"><small class="text-muted">Last update {{ c.published_date }}</small></p>
+          <p class="card-text">{{ c.Details_M|truncatechars:340|safe }}</p>
+          <a type="button" href="{% url 'details' c.pk %}" class="btn btn-dark">Continue Reading</a>          
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+</body>
+{% endblock %}
+</html>

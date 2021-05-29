@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% extends 'base.html' %}
+  {% block content %}
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+  <style>
+    img {
+    height: 80%;
+    width: 80%;
+    object-fit: cover;
+    }
+    
+    .content-item {
+      padding:30px 0;
+      background-color:#FFFFFF;
+    }
+
+    .content-item.grey {
+      background-color:#F0F0F0;
+      padding:50px 0;
+      height:100%;
+    }
+
+    .content-item h2 {
+      font-weight:700;
+      font-size:35px;
+      line-height:45px;
+      text-transform:uppercase;
+      margin:20px 0;
+    }
+
+    .content-item h3 {
+      font-weight:400;
+      font-size:20px;
+      color:#555555;
+      margin:10px 0 15px;
+      padding:0;
+    }
+
+    .content-headline {
+      height:1px;
+      text-align:center;
+      margin:20px 0 70px;
+    }
+
+    .content-headline h2 {
+      background-color:#FFFFFF;
+      display:inline-block;
+      margin:-20px auto 0;
+      padding:0 20px;
+    }
+
+    .grey .content-headline h2 {
+      background-color:#F0F0F0;
+    }
+
+    .content-headline h3 {
+      font-size:14px;
+      color:#AAAAAA;
+      display:block;
+    }
+
+
+    #comments {
+        box-shadow: 0 -1px 6px 1px rgba(0,0,0,0.1);
+      background-color:#FFFFFF;
+    }
+
+    #comments form {
+      margin-bottom:30px;
+    }
+
+    #comments .btn {
+      margin-top:7px;
+    }
+
+    #comments form fieldset {
+      clear:both;
+    }
+
+    #comments form textarea {
+      height:100px;
+    }
+
+    #comments .media {
+      border-top:1px dashed #DDDDDD;
+      padding:20px 0;
+      margin:0;
+    }
+
+    #comments .media > .pull-left {
+        margin-right:20px;
+    }
+
+    #comments .media img {
+      max-width:100px;
+    }
+
+    #comments .media h4 {
+      margin:0 0 10px;
+    }
+
+    #comments .media h4 span {
+      font-size:14px;
+      float:right;
+      color:#999999;
+    }
+
+    #comments .media p {
+      margin-bottom:15px;
+      text-align:justify;
+    }
+
+    #comments .media-detail {
+      margin:0;
+    }
+
+    #comments .media-detail li {
+      color:#AAAAAA;
+      font-size:12px;
+      padding-right: 10px;
+      font-weight:600;
+    }
+
+    #comments .media-detail a:hover {
+      text-decoration:underline;
+    }
+
+    #comments .media-detail li:last-child {
+      padding-right:0;
+    }
+
+    #comments .media-detail li i {
+      color:#666666;
+      font-size:15px;
+      margin-right:10px;
+    }
+  </style>
+
+    {% for o in ID_Post %}
+      <div class="container">
+        <div class="page-header">
+          <h1><b>{{ o.Title_M }}</b></h1> 
+          {% for UI in UserInfoS %}
+            {% if o.User_Name == UI.User_Name %}  
+              <div class="container" id="imgcontainer">
+                <div class="items photo">
+                  <p style="font-size:large; color: rgb(61, 59, 59); " ><a href="{% url 'Filter_Display' o.Category_M %}">{{ o.Category_M }}</a> artical posted by  <b style="color: rgb(9, 9, 155);">{{ o.User_Name }}</b><img src="{{ UI.Photo.url }}" style="width:40px; margin-left: 1%; height: 40px; border-radius: 50%;" alt="Cat 1"></p>
+                </div>                                                                                                                  
+              </div>  
+            {% endif %}
+          {% endfor %}
+          <form method="POST" action="{% url 'like' o.id %}">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+            <div class="btn-group" role="group" aria-label="Basic example" style="float: right; margin-top: -2%; margin-right: 2%;">
+              <button type="submit" class="btn btn-primary" name="post_id" value="{{ o.id }}"><b style="color: black;">{{ o.Liked_int_M }}</b>.6K Like</button>
+              <a type="button" href="#comment" class="btn btn-dark">Comments</a>
+              {% if user == o.User_Name %}
+                <a type="button" data-target="#myModal" href="{% url 'delete' o.pk %}" class="btn btn-danger">deletepost</a>
+                <a type="button" href="{% url 'update' o.pk %}" class="btn btn-info">editpost</a>
+              {% endif %}
+            </div>
+            {% endif %}
+          </form>
+          <p style="margin-left: 1.60%;">{{ o.published_date }}</p><hr>
+        </div>
+        {% if o.ImagesM %}
+          <p style="text-align: justify; text-justify: inter-word;"></p><img class="img-thumbnail" src="{{ o.ImagesM.url }}" alt="Avatar" style="width:50%; float: left; margin-right: 2%;">{{ o.Details_M|safe|linebreaksbr}}</p>
+        {% endif %}
+        
+        <p style="float: right; margin-right: 2%; color: red;"><b>{{o.Liked_int_M}}.3K likes Recorded</b></p>
+        <hr>
+      
+      
+      <h1>Comments...</h1><br>
+      <form action="" method="POST" style="border-color: black;">
+        {% csrf_token %}
+        <section class="content-item" id="comments">
+          <div class="container">     
+            <form>
+              <div class="row">
+                <div class="col-sm-3 col-lg-2 hidden-xs">
+                {% for c in ID_Post %}
+                {% for UI in UserInfoS %}
+                {% if user == UI.User_Name %}
+                  <img class="img-thumbnail" src="{{ UI.Photo.url }}" style="width:50px; height: 50px; border-radius: 15%;" alt="Cat 1">
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+                </div>
+                <div id="comment" class="form-group col-xs-12 col-sm-9 col-lg-10"><!--comment form-->
+                  {% if user.is_authenticated %}
+                    {{ forms.CommentF }}
+                  {% endif %}
+                </div>
+              </div>  	
+            </form>
+        
+        <button type="submit" style="margin-top: 0.60%;" class="btn btn-dark btn-lg btn-block"><b>POST</b></button> <br>
+      </form><!--comments display with filter-->
+      {% for c in CommentS %}
+      {% for UI in UserInfoS %}
+      {% if c.User_Name == UI.User_Name %}
+      <div class="media">
+        {% if UI.Photo %}
+        <a class="pull-left" href="#"><img class="img-thumbnail" style="width:50px; height: 50px; border-radius: 15%;" src="{{ UI.Photo.url }}" alt=""></a>
+        <div class="media-body">
+          <h4 class="media-heading">{{ c.User_Name }}</h4>
+        {% endif %}
+      {% endif %}
+      {% endfor %}
+        <p>{{ c.Comment }}</p>
+        <p style="color: rgb(61, 59, 59); font-size: x-small;">{{c.Commented_date}}</p>
+        </div>
+      </div>
+    {% endfor %}         
+{% endfor %}
+</body>
+{% endblock %}
+</html>
+
+
+
+
+

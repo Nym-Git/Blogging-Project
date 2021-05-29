@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block content %}
+<html lang="en">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!--bootstrap mediaField-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <script src="https://cdn.jsdelivr.net/sharer.js/latest/sharer.min.js"></script>
+</head>
+<style>
+  img {
+  height: 80%;
+  width: 80%;
+  object-fit: cover;
+  }
+
+</style>
+<body style="background-color: rgba(173, 173, 170, 0.863);">
+
+  {% for o in Post %}
+  <div class="container">
+    <div class="page-header">
+      <h1><b>{{ o.Title_M }}</b></h1> 
+      {% for UI in User_InfoS %}
+        {% if o.User_Name == UI.User_Name %}  
+          <div class="container" id="imgcontainer">
+            <div class="items photo">
+              <p style="font-size:large; color: rgb(61, 59, 59); " ><a href="{% url 'Filter_Display' o.Category_M %}">{{ o.Category_M }}</a> artical posted by   <a href="{% url 'admin' o.pk %}"><b style="color: rgb(9, 9, 155);">{{ o.User_Name }}</b></a><img src="{{ UI.Photo.url }}" style="width:40px; margin-left: 1%; height: 40px; border-radius: 50%;" alt="Cat 1"></p>
+            </div>                                                                                                                  
+          </div>  
+        {% endif %}
+      {% endfor %}
+      {% endfor %}
+</body>
+{% endblock %}
+</html>

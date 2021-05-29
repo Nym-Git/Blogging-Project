@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+{% block content %}
+<body style="background-color: rgb(145, 139, 139);">
+  {% if user.is_superuser %}
+  <form action="" method="POST" style="width: 50%; margin-left: 20%;">
+    {% csrf_token %}
+    <br>
+    <h2 style="color: white;"><b>Hello admin! Happy to see you... </b></h2>
+    <br><br>
+    <label><b>ADD The Category name:</b></label>
+    {{ form.category }}
+    <br>
+    <button type="submit" class="btn btn-dark btn-lg btn-block" style="color: white;">ADD a new filter object</button>
+  </form>
+  {% endif %}
+</body>
+</html>
+{% endblock %}
+

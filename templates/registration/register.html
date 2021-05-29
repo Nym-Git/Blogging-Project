@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+{% block content %}
+<body style="background-color: rgb(87, 86, 86);">
+
+  <form action="" method="POST" enctype="multipart/form-data" style="width: 90%; color: blanchedalmond; padding-left: 10%;">
+    <h1 style="text-align: center; color: white;">Create A New <b>Account</b></h1>
+    <br>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <br>
+    <button type="submit" class="btn btn-danger btn-lg btn-block">signUP</button>
+  </form>
+
+</body>
+</html>
+{% endblock %}

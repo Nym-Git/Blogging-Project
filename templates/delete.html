@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+{% block content %}
+<body style="background-color: rgb(146, 146, 138);">
+  <div class="container">
+    <h2 style="text-align: center; color: white;">Update your <b>POST</b></h2><br>
+    <form method="POST" style="background-color: black;">
+      {% csrf_token %}
+      <div class="form-group" style="color: blanchedalmond;">
+        <h3 style="padding: 2%;">{{obj.Title_M}}</h3>
+        <h4 style="color: red; margin-left: 8%;">you really want to delete this post</h4>
+      <br><br>
+      <a type="button" href="{% url 'details' obj.id %}" class="btn btn-danger" style="margin-left: 3%;">cancel</a>
+      <input type="submit" class="btn btn-dark" value="yes! please Delete my POST" style="color: white; margin-right: 4%; margin-bottom: 4%; float: right;">
+    </form><br><br>
+  </div>
+{% endblock %}
+</body>
+</html>
+
