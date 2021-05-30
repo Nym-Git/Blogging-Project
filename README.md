@@ -21,6 +21,6 @@ _____________________________________________
 
 -git push -u origin main
 
-OR
+          OR
 
 -git push -u origin master
