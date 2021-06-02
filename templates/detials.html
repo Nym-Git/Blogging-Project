@@ -18,7 +18,7 @@
     width: 80%;
     object-fit: cover;
     }
-    
+
     .content-item {
       padding:30px 0;
       background-color:#FFFFFF;
@@ -144,49 +144,68 @@
       font-size:15px;
       margin-right:10px;
     }
+    @media only screen and (max-width: 900px) {
+      #imag {
+        width: 95%;
+        float: left;
+        margin-left: 2%;
+      }
+    }
+    @media only screen and (min-width: 900px) {
+      #imag {
+        width:50%;
+        float: left;
+        margin-right: 2%;
+
+      }
+    }
   </style>
 
     {% for o in ID_Post %}
       <div class="container">
         <div class="page-header">
-          <h1><b>{{ o.Title_M }}</b></h1> 
+          <h1><b>{{ o.Title_M }}</b></h1>
           {% for UI in UserInfoS %}
-            {% if o.User_Name == UI.User_Name %}  
+            {% if o.User_Name == UI.User_Name %}
               <div class="container" id="imgcontainer">
                 <div class="items photo">
-                  <p style="font-size:large; color: rgb(61, 59, 59); " ><a href="{% url 'Filter_Display' o.Category_M %}">{{ o.Category_M }}</a> artical posted by  <b style="color: rgb(9, 9, 155);">{{ o.User_Name }}</b><img src="{{ UI.Photo.url }}" style="width:40px; margin-left: 1%; height: 40px; border-radius: 50%;" alt="Cat 1"></p>
-                </div>                                                                                                                  
-              </div>  
+                  <p style="font-size:large; color: rgb(61, 59, 59); " ><a href="{% url 'Filter_Display' o.Category_M %}">{{ o.Category_M }}</a> article posted by  <b style="color: rgb(9, 9, 155);">{{ o.User_Name }}</b><img src="{{ UI.Photo.url }}" style="width:40px; margin-left: 1%; height: 40px; border-radius: 50%;" alt="Cat 1"></p>
+                </div>
+              </div>
             {% endif %}
           {% endfor %}
           <form method="POST" action="{% url 'like' o.id %}">
             {% csrf_token %}
-            {% if user.is_authenticated %}
             <div class="btn-group" role="group" aria-label="Basic example" style="float: right; margin-top: -2%; margin-right: 2%;">
-              <button type="submit" class="btn btn-primary" name="post_id" value="{{ o.id }}"><b style="color: black;">{{ o.Liked_int_M }}</b>.6K Like</button>
+            {% if user.is_authenticated %}
+              <button type="submit" class="btn btn-primary" name="post_id" value="{{ o.id }}"><b style="color: black;">{{ o.Liked_int_M }}</b> like</button>
               <a type="button" href="#comment" class="btn btn-dark">Comments</a>
               {% if user == o.User_Name %}
                 <a type="button" data-target="#myModal" href="{% url 'delete' o.pk %}" class="btn btn-danger">deletepost</a>
-                <a type="button" href="{% url 'update' o.pk %}" class="btn btn-info">editpost</a>
+                <a type="button" href="{% url 'update' o.pk %}" class="btn btn-info">edit</a>
               {% endif %}
-            </div>
+            {% else %}
+              <a href="{% url 'login' %}" class="btn btn-primary"><b style="color: black;">{{ o.Liked_int_M }}</b> like</a>
+              <a type="button" href="#comment" class="btn btn-dark">Comments</a>
             {% endif %}
+            </div>
+
           </form>
           <p style="margin-left: 1.60%;">{{ o.published_date }}</p><hr>
         </div>
         {% if o.ImagesM %}
-          <p style="text-align: justify; text-justify: inter-word;"></p><img class="img-thumbnail" src="{{ o.ImagesM.url }}" alt="Avatar" style="width:50%; float: left; margin-right: 2%;">{{ o.Details_M|safe|linebreaksbr}}</p>
+          <p style="text-align: justify; text-justify: inter-word;"><img id="imag" class="img-thumbnail" src="{{ o.ImagesM.url }}" alt="Avatar"><br><br>{{ o.Details_M|safe|linebreaksbr}}</p>
         {% endif %}
-        
-        <p style="float: right; margin-right: 2%; color: red;"><b>{{o.Liked_int_M}}.3K likes Recorded</b></p>
+
+        <p style="float: right; margin-right: 2%; color: red;"><b>{{o.Liked_int_M}} likes Recorded..</b></p>
         <hr>
-      
-      
+
+
       <h1>Comments...</h1><br>
       <form action="" method="POST" style="border-color: black;">
         {% csrf_token %}
         <section class="content-item" id="comments">
-          <div class="container">     
+          <div class="container">
             <form>
               <div class="row">
                 <div class="col-sm-3 col-lg-2 hidden-xs">
@@ -199,14 +218,16 @@
                 {% endfor %}
                 </div>
                 <div id="comment" class="form-group col-xs-12 col-sm-9 col-lg-10"><!--comment form-->
-                  {% if user.is_authenticated %}
                     {{ forms.CommentF }}
-                  {% endif %}
+
                 </div>
-              </div>  	
+              </div>
             </form>
-        
-        <button type="submit" style="margin-top: 0.60%;" class="btn btn-dark btn-lg btn-block"><b>POST</b></button> <br>
+        {% if user.is_authenticated %}
+            <button type="submit" style="margin-top: 0.60%;" class="btn btn-dark btn-lg btn-block"><b>POST</b></button> <br>
+        {% else %}
+            <a href="{% url 'login' %}" style="margin-top: 0.60%;" class="btn btn-dark btn-lg btn-block"><b>POST</b></a> <br>
+        {% endif %}
       </form><!--comments display with filter-->
       {% for c in CommentS %}
       {% for UI in UserInfoS %}
@@ -223,7 +244,7 @@
         <p style="color: rgb(61, 59, 59); font-size: x-small;">{{c.Commented_date}}</p>
         </div>
       </div>
-    {% endfor %}         
+    {% endfor %}
 {% endfor %}
 </body>
 {% endblock %}
