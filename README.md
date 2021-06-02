@@ -2,6 +2,7 @@
 This is the blog project based on Django Web framework (python)
 
 -pip install django-ckeditor
+
 -nym
 -@*
 _____________________________________________
