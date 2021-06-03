@@ -224,7 +224,11 @@
               </div>
             </form>
         {% if user.is_authenticated %}
-            <button type="submit" style="margin-top: 0.60%;" class="btn btn-dark btn-lg btn-block"><b>POST</b></button> <br>
+            {% if User %}
+              <button type="submit" style="margin-top: 0.60%;" class="btn btn-dark btn-lg btn-block"><b>POST</b></button> <br>
+            {% else %}
+              <a href="{% url 'userProfile' %}" style="margin-top: 0.60%;" class="btn btn-dark btn-lg btn-block"><b>POST</b></a> <br>
+            {% endif %}
         {% else %}
             <a href="{% url 'login' %}" style="margin-top: 0.60%;" class="btn btn-dark btn-lg btn-block"><b>POST</b></a> <br>
         {% endif %}
