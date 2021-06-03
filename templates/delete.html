@@ -10,19 +10,26 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 {% block content %}
-<body style="background-color: rgb(146, 146, 138);">
+<body style="background-color: rgb(56, 56, 56);">
   <div class="container">
-    <h2 style="text-align: center; color: white;">Update your <b>POST</b></h2><br>
+    <br><br>
     <form method="POST" style="background-color: black;">
       {% csrf_token %}
-      <div class="form-group" style="color: blanchedalmond;">
-        <h3 style="padding: 2%;">{{obj.Title_M}}</h3>
-        <h4 style="color: red; margin-left: 8%;">you really want to delete this post</h4>
-      <br><br>
-      <a type="button" href="{% url 'details' obj.id %}" class="btn btn-danger" style="margin-left: 3%;">cancel</a>
-      <input type="submit" class="btn btn-dark" value="yes! please Delete my POST" style="color: white; margin-right: 4%; margin-bottom: 4%; float: right;">
-    </form><br><br>
-  </div>
+      <div class="jumbotron text-center" style=" background-color: rgba(0, 0, 0, 0.19); box-shadow: 0 4px 8px 0 rgba(34, 34, 32, 0.589), 0 6px 20px 0 rgba(250, 20, 4, 0.575);">
+        <h2 style="color: white;">{{obj.Title_M}}</h2>
+        <br>
+        <hr color="white">
+        <p class="lead" style="color: thistle;"><strong >Dear! <b style="color: rgb(32, 17, 240);">{{ user }}</b></strong> you really want to <b style="color: red;">Delete</b> this post right now...</p>
+        
+        <p style="color: rgb(124, 123, 123);">
+          Having trouble? <a href="mailto: nemachandragoswami0099@email.com" style="color: white;" > Contact us</a>
+        </p><br>
+        <p class="lead">
+          <button type="submit" class="btn btn-danger btn-sm" href="{% url 'details' obj.id %}" role="button">No... It just a mistake</button>
+          <button type="submit" class="btn btn-primary btn-sm" href="https://bootstrapcreative.com/" role="button">Continue... delete this post</button>
+        </p>
+      </div>
+    </form>
 {% endblock %}
 </body>
 </html>
