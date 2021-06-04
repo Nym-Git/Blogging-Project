@@ -8,6 +8,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
   <!-- Bootstrap core CSS -->
   <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -69,20 +71,9 @@
     {% for item in manu %}
       <a href="{% url 'Filter_Display' item.Category_Field %}">{{ item.Category_Field }}</a>
     {% endfor %}
-      <a href="#news">News</a>
-      <a href="#contact">Contact</a>
-      <a href="#about">About</a>
-      <a href="#support">Support</a>
-      <a href="#blog">Blog</a>
-      <a href="#tools">Tools</a>  
-      <a href="#base">Base</a>
-      <a href="#custom">Custom</a>
-      <a href="#more">More</a>
-      <a href="#logo">Logo</a>
-      <a href="#friends">Friends</a>
-      <a href="#partners">Partners</a>
-      <a href="#people">People</a>
-      <a href="#work">Work</a>
+    {% if git %}
+      <a href="https://github.com/Nym-Git/Blogging-pythonanywhere-WEB-project/blob/master/README.md"><i class="fa fa-github-square fa-3x social" style="color: white; border-color: red;"></i></a>
+    {% endif %}
     </div>
     <div class="btn-group-vertical" style="margin-left: 1%;">
       {% if user.is_authenticated %}
