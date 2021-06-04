@@ -20,8 +20,9 @@ def indexVIEW(request):
 
   else:
     form = InstructionFORMS()
-
-  context = {'form': form}
+  
+  htmlcode = True
+  context = {'form': form, 'git':htmlcode}
   return render(request,'index.html', context)
 
 
@@ -33,7 +34,7 @@ def categoryVIEW(request):
     if form.is_valid():
       new_req = Category(Category_Field=request.POST['category'])
       new_req.save()
-      return render(request,'display.html')
+      return HttpResponseRedirect(reverse('display'))
 
   else:
     form = categoryFORMS()
@@ -75,7 +76,7 @@ def UserInfo(request):
     if form.is_valid():
       new_req = User_Information(User_Name = request.user, First_name = request.user.first_name, Last_name= request.user.last_name, PAN_ID_Number=request.POST['panF'], Adhar_Card_Number=request.POST['adharF'], Mobile_Number=request.POST['mobileF'],Instagram=request.POST['instaF'],Facebook=request.POST['fbF'],LindedIN=request.POST['inF'],AboutU=request.POST['aboutUF'],Photo=request.FILES['photoF'])
       new_req.save()
-      return render(request,'display.html')
+      return HttpResponseRedirect(reverse('display'))
 
   else:
     form = profileFORMS()
