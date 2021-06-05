@@ -6,7 +6,7 @@ from django.views import generic
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.forms import UserCreationForm
-
+from django.core.paginator import Paginator
 
 
 # Post Creation View
@@ -49,6 +49,10 @@ def display(request):
   adds = GoogleAdd.objects.all()
   Category_manu = Category.objects.all()                # borrow the Category manu form categorys model for Sow on the navbar
   All_POSTs = Instruction.objects.all().order_by('-id')
+  
+  paginator = Paginator(All_POSTs, 12)
+  page = request.GET.get('page')
+  All_POSTs = paginator.get_page(page)
   return render(request,'display.html', {'PostS':All_POSTs, 'manu':Category_manu, 'ADDS': adds})
 
 
@@ -76,7 +80,7 @@ def UserInfo(request):
     if form.is_valid():
       new_req = User_Information(User_Name = request.user, First_name = request.user.first_name, Last_name= request.user.last_name, PAN_ID_Number=request.POST['panF'], Adhar_Card_Number=request.POST['adharF'], Mobile_Number=request.POST['mobileF'],Instagram=request.POST['instaF'],Facebook=request.POST['fbF'],LindedIN=request.POST['inF'],AboutU=request.POST['aboutUF'],Photo=request.FILES['photoF'])
       new_req.save()
-      return HttpResponseRedirect(reverse('display'))
+      return HttpResponseRedirect(reverse('userProfile'))
 
   else:
     form = profileFORMS()
