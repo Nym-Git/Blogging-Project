@@ -32,6 +32,29 @@
       </div>
       {% endfor %}
     </div>
+    <nav style="color: black; border-color: black;" >
+      <ul class="pagination" >
+        {% if PostS.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page={{PostS.previous_page_number}}">Previous</a></li>
+          {% if PostS.number > 2 %}
+            <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+          {% endif %}
+        {% endif %}
+        {% for num in PostS.paginator.page_range %}
+          {% if PostS.number == num %}
+            <li class="page-item"><a class="page-link" href=""><b>{{num}}</b></a></li>
+
+          {% elif num > PostS.number|add:'-2' and num < PostS.number|add:'3' %}
+
+            <li class="page-item"><a class="page-link" href="?page={{num}}">{{num}}</a></li>
+
+          {% endif %}
+        {% endfor %}
+        {% if PostS.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{PostS.next_page_number}}">Next</a></li>
+        {% endif %}
+      </ul>
+    </nav>
 </body>
 {% endblock %}
 </html>
