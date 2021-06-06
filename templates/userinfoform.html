@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 {% extends 'base.html' %}
-{% block content %}
 <html lang="en">
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-  <!--bootstrap mediaField-->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-  <script src="https://cdn.jsdelivr.net/sharer.js/latest/sharer.min.js"></script>
+  {% block content %}
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
+
 <style>
   img {
   height: 80%;
@@ -20,21 +19,45 @@
 
 </style>
 <body style="background-color: rgba(173, 173, 170, 0.863);">
-
-  {% for o in Post %}
   <div class="container">
-    <div class="page-header">
-      <h1><b>{{ o.Title_M }}</b></h1> 
-      {% for UI in User_InfoS %}
-        {% if o.User_Name == UI.User_Name %}  
-          <div class="container" id="imgcontainer">
-            <div class="items photo">
-              <p style="font-size:large; color: rgb(61, 59, 59); " ><a href="{% url 'Filter_Display' o.Category_M %}">{{ o.Category_M }}</a> artical posted by   <a href="{% url 'admin' o.pk %}"><b style="color: rgb(9, 9, 155);">{{ o.User_Name }}</b></a><img src="{{ UI.Photo.url }}" style="width:40px; margin-left: 1%; height: 40px; border-radius: 50%;" alt="Cat 1"></p>
-            </div>                                                                                                                  
-          </div>  
-        {% endif %}
+    {% for i in ID_Post %}
+      <div class="row">
+        <div class="col-sm-4" style="padding: 2%; margin-left: -3%;">
+          {% for c in UserInfo %}
+          {% if i.User_Name == c.User_Name %}
+          <div class="card" style="margin-top: 10%; border: groove; border-color: rgb(148, 150, 20); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+            <div class="card">
+              {% if c.Photo %}
+                <img class="img-thumbnail" style="border-radius: 5%; margin-left: 8%; margin-top: 2%; border-color: black;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); width: 190px;" src="{{ c.Photo.url }}">
+              {% endif %}
+            <div class="card-body">
+              <h5 class="card-title"><b>{{ c.First_name }} {{ c.Last_name }} ...</b></h5>
+              <p class="card-text">{{c.AboutU}}</p>
+              <a href="{{ c.Facebook }}"><i class="fa fa-facebook-square fa-3x social" style="color: rgb(7, 7, 75);"></i></a>
+              <a href="{{ c.LindedIN }}"><i class="fa fa-linkedin-square fa-3x social" style="color: rgb(7, 7, 192);"></i></a>
+              <a href="{{ c.Instagram }}"><i class="fa fa-instagram fa-3x social" style="color: rgb(255, 0, 76);"></i></a>
+              <a href="mailto: {{ user.email }}"><i class="fa fa-envelope-square fa-3x social" style="color: black;"></i></a>
+              <p class="card-text" style="font-size: smaller;"> Updated on, {{ c.Update_date }}</p>
+            </div>
+          {% endif %}
+          {% endfor %}
+            </div>
+          </div>
+        </div>
+    {% endfor %}
+    <div class="col-sm" style="background-color: rgb(250, 246, 246); border: groove; margin-top: 4%; border-color: rgb(148, 150, 20); box-shadow: 0 4px 8px 0 rgba(77, 78, 24, 0.979), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+      <div style="padding: 1%;">
+        <h1 style="text-align: center;"><b>Your Posts</b></h1><hr>
+      {% for i in ID_Post %}
+        {% for f in PostS %}
+          {% if f.User_Name == i.User_Name %}
+          <p><b>.</b> <a href="{% url 'details' f.pk %}" style="color: rgb(95, 16, 16);"> <b>{{ f.Title_M }}</b> </p></a>
+          {% endif %}
+        {% endfor %}
       {% endfor %}
-      {% endfor %}
+      </div>
+  </div>
+  
 </body>
 {% endblock %}
 </html>
