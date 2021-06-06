@@ -223,7 +223,7 @@
             {% if o.User_Name == UI.User_Name %}
               <div class="container" id="imgcontainer">
                 <div class="items photo">
-                  <p style="font-size:large; color: rgb(61, 59, 59); " ><a href="{% url 'Filter_Display' o.Category_M %}">{{ o.Category_M }}</a> article posted by  <b style="color: rgb(9, 9, 155);">{{ o.User_Name }}</b><img src="{{ UI.Photo.url }}" style="width:40px; margin-left: 1%; height: 40px; border-radius: 50%;" alt="Cat 1"></p>
+                  <p style="font-size:large; color: rgb(61, 59, 59); " ><a href="{% url 'Filter_Display' o.Category_M %}">{{ o.Category_M }}</a> article posted by  <a href="{% url 'author' o.pk %}"><b style="color: rgb(9, 9, 155);">{{ o.User_Name }}</b></a><img src="{{ UI.Photo.url }}" style="width:40px; margin-left: 1%; height: 40px; border-radius: 50%;" alt="Cat 1"></p>
                 </div>
               </div>
             {% endif %}
