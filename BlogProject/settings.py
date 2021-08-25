@@ -23,6 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: "-+gz=ghuf1)gvr#4loli$v@($=*yxt)h2&_st+$hqt865mf!1o" keep the secret key used in production secret!
 SECRET_KEY = '-+gz=ghuf1)gvr#4loli$v@($=*yxt)h2&_st+$hqt865mf!1o'
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -45,7 +46,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    #'whitenoise.middleware.WhiteNoiseMiddleware',           #just for heroku
+    'whitenoise.middleware.WhiteNoiseMiddleware',           #just for heroku
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -124,7 +125,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-#STATIC_ROOT = BASE_DIR / 'static'        #just for heroku   [pip install whitenoise]
+STATIC_ROOT = BASE_DIR / 'static'        #just for heroku   [pip install whitenoise]
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media/Blogging/APP')
