@@ -7,9 +7,9 @@ from django.conf import settings
 
 
 urlpatterns = [
-  path('',views.indexVIEW, name='index'),
+  path('post/create/',views.indexVIEW, name='index'),
   path('Choice/',views.categoryVIEW, name='choice'),
-  path('display/',views.display, name='display'),
+  path('',views.display, name='display'),
   path('Trending/post/',views.trendingVIEW, name='trending'),
   path('display/blog/<str:choice>',views.Filter_DisplayVIEW, name='Filter_Display'),
   path('user/',views.UserInfo, name='userProfile'),
