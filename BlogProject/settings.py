@@ -134,6 +134,8 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR,'static'),
 )
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'          #just for heroku
+
 LOGIN_REDIRECT_URL = 'display'
 LOGOUT_REDIRECT_URL = 'display'
 
