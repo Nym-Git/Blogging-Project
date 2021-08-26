@@ -125,7 +125,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'static'        #just for heroku   [pip install whitenoise]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root', 'static')        #just for heroku   [pip install whitenoise]
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media/Blogging/APP')
@@ -133,7 +133,6 @@ MEDIA_ROOT =  os.path.join(BASE_DIR, 'media/Blogging/APP')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR,'static'),
 )
-
 
 LOGIN_REDIRECT_URL = 'display'
 LOGOUT_REDIRECT_URL = 'display'
