@@ -1,4 +1,3 @@
-{% extends 'base.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,14 +10,26 @@
 <body style="background-color: black; color: white;">
 
   <form action="" method="POST" enctype="multipart/form-data" style="font-size: larger; align-items: center; padding: 10%;">
-    <h1><b>Welcome back !</b></h1>
-    <br>
+    <h1><b>Welcome back !</b></h1><br>
     {% csrf_token %}
-    {{ form.as_p }}
-  <br>
-    <button type="submit" style="margin-left: 15%;" class="btn btn-primary">logIn</button>
-  </form>
+    {% if form.errors %}
+      <p style="color: red">Your username and password didn't match. Please try again.</p>
+    {% endif %}
+    {% for field in form %}
+      <p>
+      {{ field.label_tag }}<br>
+      {{ field }}<br>
+      {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+      {% endfor %}
+      {% if field.help_text %}
+        <p><small style="color: grey">{{ field.help_text }}</small></p>
+      {% endif %}
+      </p>
+    {% endfor %}  
     
+  <button type="submit" style="margin-left: 15%;" class="btn btn-primary">logIn</button>
+  </form>
 {% endblock %}  
 </body>
 </html>
